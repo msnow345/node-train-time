@@ -4,6 +4,14 @@ var Rail = require('national-rail-darwin')
 const DARWIN_TOKEN = '744c2b06-42f9-4261-b0a3-159b96d3d931';
 var rail = new Rail(DARWIN_TOKEN) // or -> new Rail(DARWIN_TOKEN)
 
+function isEmpty(obj) {
+  for (var key in obj) {
+    if (obj.hasOwnProperty(key))
+      return false;
+  }
+  return true;
+}
+
 /* GET users listing. */
 router.get('/', function (req, res, next) {
 
@@ -12,10 +20,11 @@ router.get('/', function (req, res, next) {
     if (result) {
       const { trainServices } = result;
       const fastestService = trainServices[0];
+
       const data = {
         "frames": [
           {
-            "text": fastestService.sta + 'is' + fastestService.eta,
+            "text": isEmpty(fastestService) ? `No trains for a while...` : `${fastestService.sta} is ${fastestService.eta}`,
             "icon": "a1395"
           },
         ]
