@@ -12,7 +12,15 @@ router.get('/', function (req, res, next) {
     if (result) {
       const { trainServices } = result;
       const fastestService = trainServices[0];
-      res.json({ trainTime: fastestService.sta, expected: fastestService.eta });
+      const data = {
+        "frames": [
+          {
+            "text": `${fastestService.sta} is ${fastestService.eta}`,
+            "icon": "a1395"
+          },
+        ]
+      }
+      res.json(data);
     }
 
   });
