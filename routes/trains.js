@@ -15,7 +15,7 @@ router.get('/', function (req, res, next) {
       const data = {
         "frames": [
           {
-            "text": `${fastestService.sta} is ${fastestService.eta}`,
+            "text": fastestService.sta + 'is' + fastestService.eta,
             "icon": "a1395"
           },
         ]
