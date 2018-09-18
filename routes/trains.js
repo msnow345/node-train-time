@@ -20,13 +20,24 @@ router.get('/', function (req, res, next) {
     if (result) {
       const { trainServices } = result;
       const fastestService = trainServices[0];
+      let minutesLate;
+
+      console.log(Date.parse())
+
+      if (fastestService.etd !== 'On time') {
+        const time1 = parseInt(fastestService.etd.split(':')[1], 10);
+        const time2 = parseInt(fastestService.std.split(':')[1], 10);
+        minutesLate = `${time1 - time2} minutes late`;
+      } else {
+        minutesLate = 'on time';
+      }
 
       // console.log('fastestService', fastestService)
 
       const data = {
         "frames": [
           {
-            "text": isEmpty(fastestService) ? `No trains for a while...` : `${fastestService.std} ${fastestService.etd === 'On time' ? 'is' : 'is leaving at'} ${fastestService.etd}`,
+            "text": isEmpty(fastestService) ? `No trains for a while...` : `${fastestService.std} is ${minutesLate}`,
             "icon": "a1395"
           },
         ]
