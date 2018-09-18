@@ -37,7 +37,7 @@ router.get('/', function (req, res, next) {
       const data = {
         "frames": [
           {
-            "text": isEmpty(fastestService) ? `No trains for a while...` : `${fastestService.std} GARB ${minutesLate}`,
+            "text": isEmpty(fastestService) ? `No trains for a while...` : `${fastestService.std} HI EM ${minutesLate}`,
             "icon": "a1395"
           },
         ]
