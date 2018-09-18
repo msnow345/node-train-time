@@ -12,34 +12,61 @@ function isEmpty(obj) {
   return true;
 }
 
+function getTimeStatement(service) {
+  if (service.etd !== 'On time') {
+    const time1 = parseInt(service.etd.split(':')[1], 10);
+    const time2 = parseInt(service.std.split(':')[1], 10);
+    return `${time1 - time2} minutes late`;
+  } else {
+    return 'on time';
+  }
+}
+
 /* GET users listing. */
 router.get('/', function (req, res, next) {
 
-  rail.getFastestDeparture('DYP', 'MOG', {}, function (err, result) {
+  rail.getDepartureBoard('DYP', { filter: 'MOG', rows: '2' }, function (err, result) {
     //do stuff
     if (result) {
       const { trainServices } = result;
-      const fastestService = trainServices[0];
-      let minutesLate;
+      const service1 = trainServices[0];
+      const service2 = trainServices[1];
 
-      console.log(Date.parse())
+      let data;
 
-      if (fastestService.etd !== 'On time') {
-        const time1 = parseInt(fastestService.etd.split(':')[1], 10);
-        const time2 = parseInt(fastestService.std.split(':')[1], 10);
-        minutesLate = `${time1 - time2} minutes late`;
+      if (isEmpty(trainServices)) {
+        data = {
+          "frames": [
+            {
+              "text": "No trains for a while...",
+              "icon": "a1395"
+            },
+          ]
+        };
+      } else if (!service2) {
+        data = {
+          "frames": [
+            {
+              "text": `${service1.std} is ${getTimeStatement(service1)}`,
+              "icon": "a1395"
+            },
+          ]
+        };
       } else {
-        minutesLate = 'on time';
+        data = {
+          "frames": [
+            {
+              "text": `${service1.std} is ${getTimeStatement(service1)}`,
+              "icon": "a1395"
+            },
+            {
+              "text": `${service2.std} is ${getTimeStatement(service2)}`,
+              "icon": "a1395"
+            },
+          ]
+        };
       }
 
-      const data = {
-        "frames": [
-          {
-            "text": isEmpty(fastestService) ? `No trains for a while...` : `${fastestService.std} is ${minutesLate}`,
-            "icon": "a1395"
-          },
-        ]
-      }
       res.json(data);
     }
 
