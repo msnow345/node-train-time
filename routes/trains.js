@@ -26,7 +26,7 @@ router.get('/', function (req, res, next) {
       const data = {
         "frames": [
           {
-            "text": isEmpty(fastestService) ? `No trains for a while...` : `${fastestService.sta} ${fastestService.etd === 'On Time' ? 'is' : 'is leaving at'} ${fastestService.etd}`,
+            "text": isEmpty(fastestService) ? `No trains for a while...` : `${fastestService.sta} ${fastestService.etd === 'On time' ? 'is' : 'is leaving at'} ${fastestService.etd}`,
             "icon": "a1395"
           },
         ]
