@@ -21,12 +21,12 @@ router.get('/', function (req, res, next) {
       const { trainServices } = result;
       const fastestService = trainServices[0];
 
-      console.log('fastestService', fastestService)
+      // console.log('fastestService', fastestService)
 
       const data = {
         "frames": [
           {
-            "text": isEmpty(fastestService) ? `No trains for a while...` : `${fastestService.sta} ${fastestService.etd === 'On time' ? 'is' : 'is leaving at'} ${fastestService.etd}`,
+            "text": isEmpty(fastestService) ? `No trains for a while...` : `${fastestService.std} ${fastestService.etd === 'On time' ? 'is' : 'is leaving at'} ${fastestService.etd}`,
             "icon": "a1395"
           },
         ]
