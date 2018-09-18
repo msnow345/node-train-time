@@ -32,7 +32,7 @@ router.get('/', function (req, res, next) {
         minutesLate = 'on time';
       }
 
-      // console.log('fastestService', )
+      // console.log('fastestService')
 
       const data = {
         "frames": [
