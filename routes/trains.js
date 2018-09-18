@@ -32,12 +32,10 @@ router.get('/', function (req, res, next) {
         minutesLate = 'on time';
       }
 
-      // console.log('fastestService')
-
       const data = {
         "frames": [
           {
-            "text": isEmpty(fastestService) ? `No trains for a while...` : `${fastestService.std} HI EM ${minutesLate}`,
+            "text": isEmpty(fastestService) ? `No trains for a while...` : `${fastestService.std} is ${minutesLate}`,
             "icon": "a1395"
           },
         ]
